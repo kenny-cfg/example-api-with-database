@@ -18,6 +18,12 @@ def _connect_to_db():
     return cnx
 
 
+def get_single_user(id_of_user):
+    return {
+        "name": "Dr Who",
+        "placeOfBirth": "Gallifrey"
+    }
+
 def get_all_users():
     try:
         # Connect to the database

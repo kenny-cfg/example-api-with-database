@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from database_utils import create_user, get_all_users
+from database_utils import create_user, get_all_users, get_single_user
 
 app = Flask(__name__)
 
@@ -38,6 +38,12 @@ def update_user(id_of_user):
 def get_all_users_endpoint():
     users = get_all_users()
     return jsonify(users)
+
+
+@app.route('/user/<int:id_of_user>')
+def get_single_user_endpoint(id_of_user):
+    user = get_single_user(id_of_user)
+    return jsonify(user)
 
 
 if __name__ == '__main__':
