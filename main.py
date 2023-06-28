@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
@@ -12,7 +12,9 @@ def ping():
 
 @app.route('/user', methods=['POST'])
 def create_user():
-    return 'CREATE USER'
+    user_data = request.get_json()
+    name = user_data['name']
+    return name
 
 
 if __name__ == '__main__':
