@@ -4,7 +4,8 @@ from config import USER, PASSWORD, HOST
 
 db_name = 'people'
 
-def _connect_to_db(db_name):
+
+def _connect_to_db():
     # Boilerplate code to connect to a mysql database, uses the auth details
     # in config.py
     cnx = mysql.connector.connect(
@@ -19,22 +20,24 @@ def _connect_to_db(db_name):
 
 def get_all_users():
     try:
-        with _connect_to_db(db_name) as db_connection:
+        # Connect to the database
+        with _connect_to_db() as db_connection:
+            # Instantiate a cursor object (so that I can run a query against the database)
             with db_connection.cursor() as cur:
                 print("Connected to DB: %s" % db_name)
-
+                # Construct SQL
                 query = "select id, name, place_of_birth from user"
-
+                # Execute the SQL
                 cur.execute(query)
-
-                result = cur.fetchall()  # this is a list with db records where each record is a tuple
+                # Get the results of the SQL
+                result = cur.fetchall()
                 users = []
                 for item in result:
-                    id = item[0]
+                    db_id = item[0]
                     name = item[1]
                     place_of_birth = item[2]
                     users.append({
-                        "id": id,
+                        "id": db_id,
                         "name": name,
                         "placeOfBirth": place_of_birth
                     })
@@ -46,7 +49,7 @@ def get_all_users():
 def create_user(name, place_of_birth):
     try:
         # Connect to the database
-        with _connect_to_db(db_name) as db_connection:
+        with _connect_to_db() as db_connection:
             # Make a cursor (an object with which we can execute a SQL query)
             with db_connection.cursor() as cur:
                 print("Connected to DB: %s" % db_name)
@@ -68,5 +71,5 @@ def create_user(name, place_of_birth):
 
 if __name__ == '__main__':
     # Prove that we can talk to the database
-    users = get_all_users()
-    print(users)
+    users_returned = get_all_users()
+    print(users_returned)
