@@ -23,14 +23,23 @@ def get_all_users():
         cur = db_connection.cursor()
         print("Connected to DB: %s" % db_name)
 
-        query = "select * from user"
+        query = "select id, name, place_of_birth from user"
 
         cur.execute(query)
 
         result = cur.fetchall()  # this is a list with db records where each record is a tuple
+        users = []
         for item in result:
-            print(item)
+            id = item[0]
+            name = item[1]
+            place_of_birth = item[2]
+            users.append({
+                "id": id,
+                "name": name,
+                "placeOfBirth": place_of_birth
+            })
         cur.close()
+        print(users)
 
     except Exception:
         raise RuntimeError("Failed to read data from DB")
