@@ -2,6 +2,8 @@ import mysql.connector
 from config import USER, PASSWORD, HOST
 
 
+db_name = 'people'
+
 def _connect_to_db(db_name):
     # Boilerplate code to connect to a mysql database, uses the auth details
     # in config.py
@@ -15,8 +17,31 @@ def _connect_to_db(db_name):
     return cnx
 
 
+def get_all_users():
+    try:
+        db_connection = _connect_to_db(db_name)
+        cur = db_connection.cursor()
+        print("Connected to DB: %s" % db_name)
+
+        query = "select * from user"
+
+        cur.execute(query)
+
+        result = cur.fetchall()  # this is a list with db records where each record is a tuple
+        for item in result:
+            print(item)
+        cur.close()
+
+    except Exception:
+        raise RuntimeError("Failed to read data from DB")
+
+    finally:
+        if db_connection:
+            db_connection.close()
+            print("DB connection is closed")
+
+
 def create_user(name, place_of_birth):
-    db_name = 'people'
     try:
         # Connect to the database
         with _connect_to_db(db_name) as db_connection:
@@ -41,4 +66,4 @@ def create_user(name, place_of_birth):
 
 if __name__ == '__main__':
     # Prove that we can talk to the database
-    create_user('Kenny', 'Sunny Birmingham')
+    get_all_users()
