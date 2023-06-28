@@ -28,5 +28,10 @@ def create_user_endpoint():
     })
 
 
+@app.route('/user')
+def get_all_users_endpoint():
+    return 'HELLO'
+
+
 if __name__ == '__main__':
     app.run(port=5000, debug=True)

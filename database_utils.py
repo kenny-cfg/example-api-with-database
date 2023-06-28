@@ -28,7 +28,7 @@ def create_user(name, place_of_birth):
                 query = f"""
                 insert into user (name, place_of_birth)
                 values ('{name}', '{place_of_birth}')
-                       """ # TODO: Really really insecure
+                       """  # TODO: Really really insecure - SQL injectable
 
                 # Run SQL query against database
                 cur.execute(query)
