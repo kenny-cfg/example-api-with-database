@@ -12,7 +12,7 @@ def ping():
 
 
 @app.route('/user', methods=['POST'])
-def create_user():
+def create_user_endpoint():
     # Interpret (deserialize, marshall) the JSON into a Python map
     user_data = request.get_json()
     # Extract name from resulting map...
