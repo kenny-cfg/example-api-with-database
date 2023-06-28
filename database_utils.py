@@ -19,35 +19,28 @@ def _connect_to_db(db_name):
 
 def get_all_users():
     try:
-        db_connection = _connect_to_db(db_name)
-        cur = db_connection.cursor()
-        print("Connected to DB: %s" % db_name)
+        with _connect_to_db(db_name) as db_connection:
+            with db_connection.cursor() as cur:
+                print("Connected to DB: %s" % db_name)
 
-        query = "select id, name, place_of_birth from user"
+                query = "select id, name, place_of_birth from user"
 
-        cur.execute(query)
+                cur.execute(query)
 
-        result = cur.fetchall()  # this is a list with db records where each record is a tuple
-        users = []
-        for item in result:
-            id = item[0]
-            name = item[1]
-            place_of_birth = item[2]
-            users.append({
-                "id": id,
-                "name": name,
-                "placeOfBirth": place_of_birth
-            })
-        cur.close()
-        print(users)
-
+                result = cur.fetchall()  # this is a list with db records where each record is a tuple
+                users = []
+                for item in result:
+                    id = item[0]
+                    name = item[1]
+                    place_of_birth = item[2]
+                    users.append({
+                        "id": id,
+                        "name": name,
+                        "placeOfBirth": place_of_birth
+                    })
+                return users
     except Exception:
         raise RuntimeError("Failed to read data from DB")
-
-    finally:
-        if db_connection:
-            db_connection.close()
-            print("DB connection is closed")
 
 
 def create_user(name, place_of_birth):
@@ -75,4 +68,5 @@ def create_user(name, place_of_birth):
 
 if __name__ == '__main__':
     # Prove that we can talk to the database
-    get_all_users()
+    users = get_all_users()
+    print(users)
