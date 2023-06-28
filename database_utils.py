@@ -40,4 +40,5 @@ def create_user(name, place_of_birth):
 
 
 if __name__ == '__main__':
+    # Prove that we can talk to the database
     create_user('Kenny', 'Sunny Birmingham')
