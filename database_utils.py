@@ -26,7 +26,7 @@ def get_single_user(id_of_user):
             with db_connection.cursor() as cur:
                 print("Connected to DB: %s" % db_name)
                 # Construct SQL
-                query = f"select id, name, place_of_birth from user where id = {id_of_user}"
+                query = f"select id, name, place_of_birth from user where id = {id_of_user}"  # INSECURE -- SQL injection
                 # Execute the SQL
                 cur.execute(query)
                 # Get the results of the SQL
