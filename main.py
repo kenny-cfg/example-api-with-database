@@ -28,6 +28,12 @@ def create_user_endpoint():
     })
 
 
+@app.route('/user/<int:id_of_user>', methods=['PUT'])
+def update_user(id_of_user):
+    print(id_of_user)
+    return 'UPDATE -- TODO'
+
+
 @app.route('/user')
 def get_all_users_endpoint():
     users = get_all_users()
@@ -36,4 +42,3 @@ def get_all_users_endpoint():
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
-    
