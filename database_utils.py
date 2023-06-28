@@ -19,10 +19,30 @@ def _connect_to_db():
 
 
 def get_single_user(id_of_user):
-    return {
-        "name": "Dr Who",
-        "placeOfBirth": "Gallifrey"
-    }
+    try:
+        # Connect to the database
+        with _connect_to_db() as db_connection:
+            # Instantiate a cursor object (so that I can run a query against the database)
+            with db_connection.cursor() as cur:
+                print("Connected to DB: %s" % db_name)
+                # Construct SQL
+                query = f"select id, name, place_of_birth from user where id = {id_of_user}"
+                # Execute the SQL
+                cur.execute(query)
+                # Get the results of the SQL
+                result = cur.fetchall()
+                for item in result:
+                    db_id = item[0]
+                    name = item[1]
+                    place_of_birth = item[2]
+                    return {
+                        "id": db_id,
+                        "name": name,
+                        "placeOfBirth": place_of_birth
+                    }
+    except Exception:
+        raise RuntimeError("Failed to read data from DB")
+
 
 def get_all_users():
     try:
@@ -77,5 +97,5 @@ def create_user(name, place_of_birth):
 
 if __name__ == '__main__':
     # Prove that we can talk to the database
-    users_returned = get_all_users()
-    print(users_returned)
+    user_returned = get_single_user(1)
+    print(user_returned)
