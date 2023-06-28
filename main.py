@@ -14,10 +14,10 @@ def ping():
 def create_user():
     user_data = request.get_json()
     name = user_data['name']
-    place_of_birth = user_data['place_of_birth']
+    place_of_birth = user_data['placeOfBirth']
     return jsonify({
-        'received_name': name,
-        'received_place_of_birth': place_of_birth
+        'receivedName': name,
+        'receivedPlaceOfBirth': place_of_birth
     })
 
 
