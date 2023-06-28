@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from database_utils import create_user
+from database_utils import create_user, get_all_users
 
 app = Flask(__name__)
 
@@ -30,8 +30,10 @@ def create_user_endpoint():
 
 @app.route('/user')
 def get_all_users_endpoint():
-    return 'HELLO'
+    users = get_all_users()
+    return jsonify(users)
 
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
+    
