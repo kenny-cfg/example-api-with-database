@@ -1,6 +1,5 @@
 import mysql.connector
-from config import USER, PASSWORD, HOST
-
+from config import USER, PASSWORD, HOST, PORT
 
 db_name = 'people'
 
@@ -8,15 +7,20 @@ db_name = 'people'
 def _connect_to_db():
     # Boilerplate code to connect to a mysql database, uses the auth details
     # in config.py
-    cnx = mysql.connector.connect(
-        host=HOST,
-        user=USER,
-        password=PASSWORD,
-        auth_plugin='mysql_native_password',
-        database=db_name
-    )
-    return cnx
+    try:
+        cnx = mysql.connector.connect(
+            host=HOST,
+            user=USER,
+            password=PASSWORD,
+            database=db_name,
+            port=PORT
+        )
+        return cnx
+    except DbConnectionError as err:
+        print("A problem creating a connection:", err)
 
+class DbConnectionError(Exception):
+    pass
 
 def get_single_user(id_of_user):
     try:
@@ -42,6 +46,7 @@ def get_single_user(id_of_user):
                     }
     except Exception:
         raise RuntimeError("Failed to read data from DB")
+
 
 
 def get_all_users():
