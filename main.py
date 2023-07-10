@@ -32,13 +32,13 @@ def create_user_endpoint():
 def update_user(id_of_user):
     print(id_of_user)
     # a comment 
-    print("hello")
     return 'UPDATE -- TODO'
 
 
 @app.route('/user')
 def get_all_users_endpoint():
     users = get_all_users()
+    print("have a nice day")
     return jsonify(users)
 
 
