@@ -32,6 +32,7 @@ def create_user_endpoint():
 def update_user(id_of_user):
     print(id_of_user)
     # a comment 
+    print("hello")
     return 'UPDATE -- TODO'
 
 
