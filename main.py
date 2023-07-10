@@ -31,6 +31,7 @@ def create_user_endpoint():
 @app.route('/user/<int:id_of_user>', methods=['PUT'])
 def update_user(id_of_user):
     print(id_of_user)
+    # a comment 
     return 'UPDATE -- TODO'
 
 
